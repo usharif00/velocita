@@ -47,24 +47,24 @@ export function InquiryDialog({ vehicle, children }: InquiryDialogProps) {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
-            <Input id="name" placeholder="Alexander Rossi" className="bg-secondary border-white/5 focus:border-gold/50" required />
+            <Label htmlFor="inquiry-name">Full Name</Label>
+            <Input id="inquiry-name" placeholder="Alexander Rossi" className="bg-secondary border-white/5 focus:border-gold/50" required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email Address</Label>
-            <Input id="email" type="email" placeholder="alex@example.com" className="bg-secondary border-white/5 focus:border-gold/50" required />
+            <Label htmlFor="inquiry-email">Email Address</Label>
+            <Input id="inquiry-email" type="email" placeholder="alex@example.com" className="bg-secondary border-white/5 focus:border-gold/50" required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="message">Message (Optional)</Label>
-            <Textarea 
-              id="message" 
-              placeholder="I am interested in discussing the provenance of this vehicle..." 
+            <Label htmlFor="inquiry-message">Message (Optional)</Label>
+            <Textarea
+              id="inquiry-message"
+              placeholder="I am interested in discussing the provenance of this vehicle..."
               className="bg-secondary border-white/5 focus:border-gold/50 min-h-[100px]"
             />
           </div>
           <DialogFooter className="pt-4">
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isSubmitting}
               className="w-full bg-gold text-obsidian hover:bg-gold/90 font-bold h-12 flex items-center gap-2"
             >

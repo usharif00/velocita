@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogTrigger,
   DialogFooter,
 } from '@/components/ui/dialog';
@@ -34,7 +35,6 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
     ownerName: '',
     ownerContact: '',
   }), []);
-  
   const [formData, setFormData] = useState(initialFormState);
   useEffect(() => {
     if (vehicle && open) {
@@ -96,6 +96,9 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
           <DialogTitle className="text-2xl font-serif text-white">
             {vehicle ? 'Modify Vehicle' : 'Add New Inventory'}
           </DialogTitle>
+          <DialogDescription className="text-muted-foreground">
+            Enter vehicle specifications and owner details to manage the showroom inventory.
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6 py-4">
           <div className="grid grid-cols-2 gap-4">
@@ -115,9 +118,9 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
             </div>
             <div className="space-y-2">
               <Label htmlFor="price">Price (USD)</Label>
-              <PriceInput 
+              <PriceInput
                 defaultValue={formData.price}
-                onPriceChange={val => setFormData({...formData, price: val})} 
+                onPriceChange={val => setFormData({...formData, price: val})}
               />
             </div>
           </div>
