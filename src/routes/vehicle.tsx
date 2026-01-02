@@ -1,12 +1,10 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useInventoryStore } from '@/lib/store';
-import { ChevronLeft, Gauge, Zap, Calendar, User, DollarSign, Trash2, Edit3 } from 'lucide-react';
+import { ChevronLeft, Gauge, Zap, Calendar, User, DollarSign, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { ManageDialog } from '@/components/manage-dialog';
-import { InquiryDialog } from '@/components/inquiry-dialog';
 export function VehicleDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -28,7 +26,6 @@ export function VehicleDetailPage() {
     toast.error('Vehicle removed from inventory');
     navigate('/');
   };
-  const monthlyEstimate = Math.round((vehicle.price * 0.012));
   return (
     <div className="space-y-10 animate-fade-in">
       <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors">
@@ -38,8 +35,8 @@ export function VehicleDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div className="space-y-6">
           <div className="aspect-[16/9] rounded-3xl overflow-hidden border border-white/5 shadow-2xl">
-            <img
-              src={vehicle.image}
+            <img 
+              src={vehicle.image} 
               alt={`${vehicle.make} ${vehicle.model}`}
               className="w-full h-full object-cover"
             />
@@ -64,15 +61,10 @@ export function VehicleDetailPage() {
         <div className="flex flex-col">
           <div className="space-y-4 mb-8">
             <Badge className="bg-gold/10 text-gold border-gold/20 text-sm py-1 px-4">{vehicle.year} Model</Badge>
-            <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">{vehicle.make} {vehicle.model}</h1>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-4xl font-semibold text-gold">
-                <DollarSign className="w-8 h-8" />
-                {vehicle.price.toLocaleString()}
-              </div>
-              <p className="text-muted-foreground text-sm pl-1">
-                Estimated ${monthlyEstimate.toLocaleString()}/mo with Velocita Finance
-              </p>
+            <h1 className="text-5xl md:text-6xl font-bold text-white">{vehicle.make} {vehicle.model}</h1>
+            <div className="flex items-center gap-2 text-3xl font-semibold text-gold">
+              <DollarSign className="w-8 h-8" />
+              {vehicle.price.toLocaleString()}
             </div>
           </div>
           <div className="space-y-6 flex-1">
@@ -104,23 +96,12 @@ export function VehicleDetailPage() {
             </div>
           </div>
           <div className="mt-12 flex gap-4">
-            <InquiryDialog vehicle={vehicle}>
-              <Button size="lg" className="flex-1 bg-gold text-obsidian font-bold h-14 rounded-xl">
-                Inquire Now
-              </Button>
-            </InquiryDialog>
-            <ManageDialog vehicle={vehicle}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-14 w-14 rounded-xl p-0 border-white/10 hover:bg-white/5"
-              >
-                <Edit3 className="w-6 h-6 text-silver" />
-              </Button>
-            </ManageDialog>
-            <Button
-              size="lg"
-              variant="destructive"
+            <Button size="lg" className="flex-1 bg-gold text-obsidian font-bold h-14 rounded-xl">
+              Inquire Now
+            </Button>
+            <Button 
+              size="lg" 
+              variant="destructive" 
               className="h-14 w-14 rounded-xl p-0"
               onClick={handleDelete}
             >
