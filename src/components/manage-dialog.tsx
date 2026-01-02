@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { PriceInput } from '@/components/ui/custom-input';
 import { useInventoryStore, Vehicle } from '@/lib/store';
 import { toast } from 'sonner';
+import { useMemo } from 'react';
 interface ManageDialogProps {
   children: React.ReactNode;
   vehicle?: Vehicle;
@@ -21,7 +22,7 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
   const [open, setOpen] = useState(false);
   const addVehicle = useInventoryStore((s) => s.addVehicle);
   const updateVehicle = useInventoryStore((s) => s.updateVehicle);
-  const initialFormState = {
+  const initialFormState = useMemo(() => ({
     make: '',
     model: '',
     year: 2024,
@@ -32,7 +33,8 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
     mileage: '',
     ownerName: '',
     ownerContact: '',
-  };
+  }), []);
+  
   const [formData, setFormData] = useState(initialFormState);
   useEffect(() => {
     if (vehicle && open) {
@@ -51,7 +53,7 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
     } else if (!open) {
       setFormData(initialFormState);
     }
-  }, [vehicle, open]);
+  }, [vehicle, open, initialFormState]);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.make || !formData.model || formData.price <= 0) {

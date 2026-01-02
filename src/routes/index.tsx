@@ -5,20 +5,13 @@ import { Input } from '@/components/ui/input';
 import { Search, X, ListFilter, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Badge } from '@/components/ui/badge';
 export function ShowroomPage() {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('newest');
   const vehicles = useInventoryStore((s) => s.vehicles);
   const filteredAndSortedVehicles = useMemo(() => {
-    let result = vehicles.filter((v) =>
+    let result = (vehicles || []).filter((v) =>
       `${v.make} ${v.model}`.toLowerCase().includes(search.toLowerCase())
     );
     if (sortBy === 'price-low') {
@@ -35,7 +28,7 @@ export function ShowroomPage() {
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
           <h1 className="text-5xl md:text-6xl font-bold text-white">The Showroom</h1>
-          <Badge className="bg-gold/20 text-gold border-none mt-2 h-6">{vehicles.length} Units</Badge>
+          <Badge className="bg-gold/20 text-gold border-none mt-2 h-6">{vehicles?.length || 0} Units</Badge>
         </div>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
           Explore our curated collection of the world's most exquisite high-performance vehicles.
@@ -60,17 +53,40 @@ export function ShowroomPage() {
           )}
         </div>
         <div className="flex gap-2">
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="h-14 w-[180px] bg-charcoal border-white/5 rounded-xl text-silver">
-              <ListFilter className="w-4 h-4 mr-2 text-gold" />
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent className="bg-charcoal border-white/10 text-silver">
-              <SelectItem value="newest">Newest Year</SelectItem>
-              <SelectItem value="price-low">Price: Low to High</SelectItem>
-              <SelectItem value="price-high">Price: High to Low</SelectItem>
-            </SelectContent>
-          </Select>
+          <Button
+            variant={sortBy === 'newest' ? 'default' : 'ghost'}
+            className={`h-14 px-4 py-3 font-medium rounded-xl flex-1 ${
+              sortBy === 'newest' 
+                ? 'bg-charcoal text-silver border-white/10 shadow-md' 
+                : 'text-muted-foreground hover:text-silver hover:bg-charcoal/50'
+            }`}
+            onClick={() => setSortBy('newest')}
+          >
+            <ListFilter className="w-4 h-4 mr-2 text-gold" />
+            Newest
+          </Button>
+          <Button
+            variant={sortBy === 'price-low' ? 'default' : 'ghost'}
+            className={`h-14 px-4 py-3 font-medium rounded-xl flex-1 ${
+              sortBy === 'price-low' 
+                ? 'bg-charcoal text-silver border-white/10 shadow-md' 
+                : 'text-muted-foreground hover:text-silver hover:bg-charcoal/50'
+            }`}
+            onClick={() => setSortBy('price-low')}
+          >
+            Price: Low
+          </Button>
+          <Button
+            variant={sortBy === 'price-high' ? 'default' : 'ghost'}
+            className={`h-14 px-4 py-3 font-medium rounded-xl flex-1 ${
+              sortBy === 'price-high' 
+                ? 'bg-charcoal text-silver border-white/10 shadow-md' 
+                : 'text-muted-foreground hover:text-silver hover:bg-charcoal/50'
+            }`}
+            onClick={() => setSortBy('price-high')}
+          >
+            Price: High
+          </Button>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
