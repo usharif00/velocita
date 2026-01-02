@@ -1,6 +1,6 @@
 # Velocita
 
-[![Deploy to Cloudflare][cloudflarebutton]]
+[![Deploy to Cloudflare][![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/usharif00/velocita)]
 
 A production-ready full-stack application template powered by Cloudflare Workers and Pages. Features a modern React frontend with TypeScript, Tailwind CSS, shadcn/ui components, and a Hono-based API backend. Designed for rapid development and seamless deployment on Cloudflare's global edge network.
 
@@ -78,7 +78,7 @@ Key files:
 
 ## Deployment
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/usharif00/velocita)
 
 1. **Configure Wrangler**:
    Edit `wrangler.jsonc` with your Cloudflare account ID (run `wrangler whoami`).
