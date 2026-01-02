@@ -32,6 +32,7 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
     engine: '',
     hp: '',
     mileage: '',
+    condition: 'Showroom',
     ownerName: '',
     ownerContact: '',
   }), []);
@@ -47,6 +48,7 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
         engine: vehicle.specs.engine,
         hp: vehicle.specs.hp,
         mileage: vehicle.specs.mileage,
+        condition: vehicle.specs.condition,
         ownerName: vehicle.owner.name,
         ownerContact: vehicle.owner.contact,
       });
@@ -70,7 +72,7 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
         engine: formData.engine || 'V8 Engine',
         hp: formData.hp || '500 hp',
         mileage: formData.mileage || 'Brand New',
-        condition: vehicle?.specs?.condition || 'Mint',
+        condition: formData.condition || 'Mint',
       },
       owner: {
         name: formData.ownerName || 'Velocita Dealer',
@@ -132,7 +134,11 @@ export function ManageDialog({ children, vehicle }: ManageDialogProps) {
             <Label className="text-gold text-xs uppercase tracking-widest font-bold">Specs & Ownership</Label>
             <div className="grid grid-cols-2 gap-4">
               <Input placeholder="Engine" value={formData.engine} onChange={e => setFormData({...formData, engine: e.target.value})} className="bg-secondary border-white/5" />
+              <Input placeholder="Condition (e.g. Mint)" value={formData.condition} onChange={e => setFormData({...formData, condition: e.target.value})} className="bg-secondary border-white/5" />
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-2">
               <Input placeholder="Mileage" value={formData.mileage} onChange={e => setFormData({...formData, mileage: e.target.value})} className="bg-secondary border-white/5" />
+              <Input placeholder="HP" value={formData.hp} onChange={e => setFormData({...formData, hp: e.target.value})} className="bg-secondary border-white/5" />
             </div>
             <div className="grid grid-cols-2 gap-4 mt-2">
               <Input placeholder="Seller Name" value={formData.ownerName} onChange={e => setFormData({...formData, ownerName: e.target.value})} className="bg-secondary border-white/5" />

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useInventoryStore } from '@/lib/store';
 import { VehicleCard } from '@/components/ui/vehicle-card';
 import { Input } from '@/components/ui/input';
@@ -9,7 +9,11 @@ import { Badge } from '@/components/ui/badge';
 export function ShowroomPage() {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('newest');
+  const [isHydrated, setIsHydrated] = useState(false);
   const vehicles = useInventoryStore((s) => s.vehicles);
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
   const filteredAndSortedVehicles = useMemo(() => {
     let result = (vehicles || []).filter((v) =>
       `${v.make} ${v.model}`.toLowerCase().includes(search.toLowerCase())
@@ -23,6 +27,17 @@ export function ShowroomPage() {
     }
     return result;
   }, [vehicles, search, sortBy]);
+  if (!isHydrated) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-gold/30 border-t-gold rounded-full animate-spin" />
+      </div>
+    );
+  }
+  const handleReset = () => {
+    setSearch('');
+    setSortBy('newest');
+  };
   return (
     <div className="space-y-12 animate-fade-in">
       <div className="text-center space-y-4">
@@ -44,7 +59,7 @@ export function ShowroomPage() {
             onChange={(e) => setSearch(e.target.value)}
           />
           {search && (
-            <button 
+            <button
               onClick={() => setSearch('')}
               className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white transition-colors"
             >
@@ -54,34 +69,28 @@ export function ShowroomPage() {
         </div>
         <div className="flex gap-2">
           <Button
-            variant={sortBy === 'newest' ? 'default' : 'ghost'}
-            className={`h-14 px-4 py-3 font-medium rounded-xl flex-1 ${
-              sortBy === 'newest' 
-                ? 'bg-charcoal text-silver border-white/10 shadow-md' 
-                : 'text-muted-foreground hover:text-silver hover:bg-charcoal/50'
+            variant={sortBy === 'newest' ? 'default' : 'outline'}
+            className={`h-14 px-6 rounded-xl ${
+              sortBy === 'newest' ? 'bg-gold text-obsidian hover:bg-gold/90 border-none' : 'border-white/10 hover:bg-white/5'
             }`}
             onClick={() => setSortBy('newest')}
           >
-            <ListFilter className="w-4 h-4 mr-2 text-gold" />
+            <ListFilter className="w-4 h-4 mr-2" />
             Newest
           </Button>
           <Button
-            variant={sortBy === 'price-low' ? 'default' : 'ghost'}
-            className={`h-14 px-4 py-3 font-medium rounded-xl flex-1 ${
-              sortBy === 'price-low' 
-                ? 'bg-charcoal text-silver border-white/10 shadow-md' 
-                : 'text-muted-foreground hover:text-silver hover:bg-charcoal/50'
+            variant={sortBy === 'price-low' ? 'default' : 'outline'}
+            className={`h-14 px-4 rounded-xl ${
+              sortBy === 'price-low' ? 'bg-gold text-obsidian hover:bg-gold/90 border-none' : 'border-white/10 hover:bg-white/5'
             }`}
             onClick={() => setSortBy('price-low')}
           >
             Price: Low
           </Button>
           <Button
-            variant={sortBy === 'price-high' ? 'default' : 'ghost'}
-            className={`h-14 px-4 py-3 font-medium rounded-xl flex-1 ${
-              sortBy === 'price-high' 
-                ? 'bg-charcoal text-silver border-white/10 shadow-md' 
-                : 'text-muted-foreground hover:text-silver hover:bg-charcoal/50'
+            variant={sortBy === 'price-high' ? 'default' : 'outline'}
+            className={`h-14 px-4 rounded-xl ${
+              sortBy === 'price-high' ? 'bg-gold text-obsidian hover:bg-gold/90 border-none' : 'border-white/10 hover:bg-white/5'
             }`}
             onClick={() => setSortBy('price-high')}
           >
@@ -111,10 +120,10 @@ export function ShowroomPage() {
               </div>
               <div className="space-y-2">
                 <p className="text-xl text-muted-foreground">No vehicles matching your criteria.</p>
-                <Button 
-                  variant="link" 
+                <Button
+                  variant="link"
                   className="text-gold hover:text-gold/80 p-0"
-                  onClick={() => { setSearch(''); setSortBy('newest'); }}
+                  onClick={handleReset}
                 >
                   Reset all filters
                 </Button>
