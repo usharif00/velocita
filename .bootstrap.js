@@ -77,7 +77,9 @@ function updateWranglerJsonc() {
 }
 
 function runSetupCommands() {
-    const commands = [];
+    const commands = [
+    "bun add @tanstack/react-router@^1.48.2"
+];
     
     if (commands.length === 0) {
         console.log('⊘ No setup commands to run');
